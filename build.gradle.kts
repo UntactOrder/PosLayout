@@ -5,29 +5,36 @@ plugins {
     id("org.jetbrains.compose")
     id("com.android.library")
 }
-/*
-repositories {
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    google()
-}
-*/
+
 group = "io.github.untactorder"
 version = "1.0"
 
 kotlin {
     android()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "common"
+        }
+    }
+
     jvm("desktop") {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
         }
     }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(compose.ui)
                 api(compose.runtime)
                 api(compose.foundation)
-                api(compose.material)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) api(compose.material3)
             }
         }
         val commonTest by getting {
@@ -37,14 +44,32 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.4.1")
+                api("androidx.appcompat:appcompat:1.5.0")
                 api("androidx.core:core-ktx:1.8.0")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("junit:junit:${rootProject.extra["junit_version"]}")
+                implementation("junit:junit:4.13.2")
             }
+        }
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+        }
+        val iosX64Test by getting
+        val iosArm64Test by getting
+        val iosSimulatorArm64Test by getting
+        val iosTest by creating {
+            dependsOn(commonTest)
+            iosX64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+            iosSimulatorArm64Test.dependsOn(this)
         }
         val desktopMain by getting {
             dependencies {
@@ -58,66 +83,13 @@ kotlin {
 android {
     compileSdk = rootProject.extra["android_target_sdk_version"] as Int?
     buildToolsVersion = rootProject.extra["android_build_tool_version"] as String
-    sourceSets {
-        getByName("main") {
-            // AndroidClient - UntactOrder
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            kotlin.srcDirs("src/androidMain/kotlin", "src/commonMain/kotlin")
-            res.srcDirs("src/androidMain/resources", "src/commonMain/resources")
-        }
-    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = rootProject.extra["android_min_sdk_version"] as Int?
         targetSdk = rootProject.extra["android_target_sdk_version"] as Int?
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0-beta01"
-    }
-    packagingOptions {
-        resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
-    }
-}
-
-dependencies {
-    // Kotlin Dependencies
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0-RC")
-
-    // Android Basic Dependencies
-    implementation("androidx.core:core-ktx:1.8.0")
-
-    // Compose Dependencies
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
-    implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha15")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["compose_version"]}")
-
-    implementation("io.github.shashank02051997:FancyToast:2.0.1")
-
-    // Markdown - https://halilibo.com/compose-richtext/
-    implementation("com.halilibo.compose-richtext:richtext-commonmark:0.13.0")
-    implementation("com.halilibo.compose-richtext:richtext-ui-material3:0.13.0")
-
-    // JUnit Dependencies
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${rootProject.extra["junit_version"]}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${rootProject.extra["junit_version"]}")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:${rootProject.extra["junit_version"]}")
-    testImplementation("junit:junit:4.13.2")
 }
