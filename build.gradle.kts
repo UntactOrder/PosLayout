@@ -6,9 +6,6 @@ plugins {
     id("com.android.library")
 }
 
-group = "io.github.untactorder"
-version = "1.0"
-
 kotlin {
     android()
 
@@ -18,7 +15,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "common"
+            baseName = "shared"
         }
     }
 
@@ -31,8 +28,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(compose.ui)
-                api(compose.runtime)
                 api(compose.foundation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) api(compose.material3)
             }
@@ -44,12 +39,16 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                api(compose.ui)
+                api(compose.runtime)
+                implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ext_version"]}")
                 api("androidx.appcompat:appcompat:1.5.0")
                 api("androidx.core:core-ktx:1.8.0")
             }
         }
         val androidTest by getting {
             dependencies {
+                implementation("androidx.test.ext:junit-ktx:1.1.3")
                 implementation("junit:junit:4.13.2")
             }
         }
@@ -73,6 +72,8 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
+                api(compose.ui)
+                api(compose.runtime)
                 api(compose.preview)
             }
         }
