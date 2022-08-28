@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("com.android.library")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -16,6 +17,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            export("dev.icerock.moko:resources:${rootProject.extra["moko_res_version"]}")
+            export("dev.icerock.moko:graphics:0.9.0")  // toUIColor here
         }
     }
 
@@ -28,22 +31,41 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(compose.ui)
+                api(compose.runtime)
                 api(compose.foundation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) api(compose.material3)
+                api("dev.icerock.moko:resources:${rootProject.extra["moko_res_version"]}")
+
+                // Kotlin Logger - Naiper
+                // https://github.com/AAkira/Napier
+                implementation("io.github.aakira:napier:2.6.1")
+
+                // KMM Setting Storage
+                // https://github.com/russhwolf/multiplatform-settings
+                implementation("com.russhwolf:multiplatform-settings:0.9")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                api("dev.icerock.moko:resources-test:${rootProject.extra["moko_res_version"]}")
             }
         }
         val androidMain by getting {
             dependencies {
-                api(compose.ui)
-                api(compose.runtime)
-                implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ext_version"]}")
+                api("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ext_version"]}")
+                api("androidx.compose.material3:material3:1.0.0-alpha16")
+                api("androidx.activity:activity-compose:1.5.1")
                 api("androidx.appcompat:appcompat:1.5.0")
                 api("androidx.core:core-ktx:1.8.0")
+                api("dev.icerock.moko:resources-compose:${rootProject.extra["moko_res_version"]}")
+
+                //implementation("io.github.shashank02051997:FancyToast:2.0.1")
+
+                // Markdown - https://halilibo.com/compose-richtext/
+                //implementation("com.halilibo.compose-richtext:richtext-commonmark:0.13.0")
+                //implementation("com.halilibo.compose-richtext:richtext-ui-material3:0.13.0")
             }
         }
         val androidTest by getting {
@@ -72,9 +94,8 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
-                api(compose.ui)
-                api(compose.runtime)
                 api(compose.preview)
+                api("dev.icerock.moko:resources-compose:${rootProject.extra["moko_res_version"]}")
             }
         }
         val desktopTest by getting
@@ -93,4 +114,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = rootProject.extra["organization"] as String? + ".shared"
 }
