@@ -1,4 +1,4 @@
-package io.github.untactorder
+package io.github.untactorder.shared
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
