@@ -1,4 +1,4 @@
-package io.github.untactorder.myapplication.ui.layout.user
+package io.github.untactorder.shared.ui.layout.user
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.github.untactorder.myapplication.*
-import io.github.untactorder.myapplication.ui.theme.UntactOrderApplicationTheme
-import io.github.untactorder.myapplication.ui.theme.getSignature
+import io.github.untactorder.*
+import io.github.untactorder.shared.ui.theme.UntactOrderApplicationTheme
+import io.github.untactorder.shared.ui.theme.getSignature
 import kotlin.random.Random
 
 

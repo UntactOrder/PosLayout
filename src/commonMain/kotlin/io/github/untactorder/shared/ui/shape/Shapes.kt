@@ -1,6 +1,5 @@
-package io.github.untactorder.myapplication.ui.shape
+package io.github.untactorder.shared.ui.shape
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,16 +16,13 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.untactorder.myapplication.ui.theme.UntactOrderElevation
+import io.github.untactorder.shared.ui.theme.UntactOrderElevation
 
-
-@Preview
 @Composable
 fun CircleWithCenteredText(
-    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
+    modifier: Modifier = Modifier
         .padding(UntactOrderElevation + 2.dp)
         .size(100.dp),
     shape: RoundedCornerShape = CircleShape,

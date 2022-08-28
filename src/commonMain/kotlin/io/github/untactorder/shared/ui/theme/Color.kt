@@ -1,4 +1,4 @@
-package io.github.untactorder.myapplication.ui.theme
+package io.github.untactorder.shared.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -61,12 +61,14 @@ data class SignatureColors(
 val SignatureColorsLight = SignatureColors(
     SignatureRed, SignatureYellow, SignatureGreen, SignatureBlue,
     SignaturePurple, SignatureWhite, SignatureGrey, SignatureText,
-    SignatureRipple, SignatureBackBoard, SignatureBackground)
+    SignatureRipple, SignatureBackBoard, SignatureBackground
+)
 
 val SignatureColorsDark = SignatureColors(
     DKSignatureRed, DKSignatureYellow, DKSignatureGreen, DKSignatureBlue,
     DKSignaturePurple, DKSignatureWhite, DKSignatureGrey, DKSignatureText,
-    DKSignatureRipple, DKSignatureBackBoard, DKSignatureBackground)
+    DKSignatureRipple, DKSignatureBackBoard, DKSignatureBackground
+)
 
 
 // UntactOrder Project Item List Colors

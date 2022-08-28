@@ -1,6 +1,5 @@
-package io.github.untactorder.myapplication.ui.shape
+package io.github.untactorder.shared.ui.shape
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,27 +18,25 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
+//import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.halilibo.richtext.markdown.Markdown
-import com.halilibo.richtext.ui.RichTextStyle
-import com.halilibo.richtext.ui.material3.Material3RichText
-import com.halilibo.richtext.ui.string.RichTextStringStyle
-import io.github.untactorder.myapplication.R
-import io.github.untactorder.myapplication.ui.theme.*
-import java.text.DecimalFormat
+//import com.halilibo.richtext.markdown.Markdown
+//import com.halilibo.richtext.ui.RichTextStyle
+//import com.halilibo.richtext.ui.material3.Material3RichText
+//import com.halilibo.richtext.ui.string.RichTextStringStyle
+import io.github.untactorder.shared.ui.theme.*
 
-@SuppressLint("UnrememberedMutableState")
-@Preview
+//import java.text.DecimalFormat
+
+
 @Composable
 fun QuantitySelector(
     value: MutableState<Int> = rememberSaveable { mutableStateOf(0) },
@@ -64,11 +61,11 @@ fun QuantitySelector(
         val underFlowOccur = remember { mutableStateOf(false) }
         val overFlowOccur = remember { mutableStateOf(false) }
         if (underFlowOccur.value) {
-            ToastView("0개 아래로는 주문할 수 없어요", AndroidToastType.warning)
+            //ToastView("0개 아래로는 주문할 수 없어요", AndroidToastType.warning)
             underFlowOccur.value = false
         }
         if (overFlowOccur.value) {
-            ToastView("1000개 이상으로는 주문할 수 없어요", AndroidToastType.error)
+            //ToastView("1000개 이상으로는 주문할 수 없어요", AndroidToastType.error)
             overFlowOccur.value = false
         }
         CircleWithCenteredText(
@@ -147,7 +144,6 @@ private val descriptionForPreview = """
     > This line is part of the same quote.
     """.trimIndent()
 
-@Preview
 @Composable
 fun ItemContainer(
     itemInfo: ItemInfo = ItemInfo(
@@ -162,7 +158,7 @@ fun ItemContainer(
     val imageHeight = componentSize * 4.5
     val imageWidth = imageHeight * imageRatio
     val padding = 1.5f
-    val decFormat = DecimalFormat("#,###")
+    //val decFormat = DecimalFormat("#,###")
     val haptic = LocalHapticFeedback.current
     val signatureColors = MaterialTheme.colorScheme.getSignature()
     Column(
@@ -182,8 +178,8 @@ fun ItemContainer(
             }
             .background(ItemListColors[1])
     ) {
-        Image(
-            painterResource(id = R.drawable.tmp),
+        /*Image(
+            painterResource(id = MR.images.tmp),
             contentDescription = "image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -193,7 +189,7 @@ fun ItemContainer(
                     elevation = UntactOrderElevation,
                     shape = RoundedCornerShape(UntactOrderRoundRadius + 13.dp),
                     clip = true)
-                .fillMaxWidth())
+                .fillMaxWidth())*/
         ResponsiveText(
             modifier = Modifier.padding(horizontal = margin.dp).width(imageWidth.dp),
             text = itemInfo.name,
@@ -240,7 +236,7 @@ fun ItemContainer(
             modifier = Modifier
                 .absolutePadding(margin.dp, top = margin.dp, margin.dp, 0.dp)
                 .width(imageWidth.dp),
-            text = "$iso4217${decFormat.format(itemInfo.price)}",
+            text = "$iso4217${itemInfo.price}",//"$iso4217${decFormat.format(itemInfo.price)}",
             textStyle = TextStyle(
                 color = signatureColors.text,
                 fontSize = (fontSize * 1.5).sp,
@@ -289,7 +285,6 @@ fun ItemContainer(
 }
 
 
-@Preview
 @Composable
 fun DetailedItemContainer(
     itemInfo: ItemInfo = ItemInfo(
@@ -304,12 +299,12 @@ fun DetailedItemContainer(
     val imageHeight = componentSize * 4.5
     val imageWidth = imageHeight * imageRatio
     val selectorPadding = 1.5f
-    val decFormat = DecimalFormat("#,###")
+    //val decFormat = DecimalFormat("#,###")
     val haptic = LocalHapticFeedback.current
     val signatureColors = MaterialTheme.colorScheme.getSignature()
     Column {
-        Image(
-            painterResource(id = R.drawable.tmp),
+        /*Image(
+            painterResource(id = MR.images.tmp),
             contentDescription = "image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -319,7 +314,7 @@ fun DetailedItemContainer(
                     shape = RoundedCornerShape(UntactOrderRoundRadius),
                     clip = true)
                 .fillMaxWidth()
-                .aspectRatio(imageRatio))
+                .aspectRatio(imageRatio))*/
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -368,6 +363,9 @@ fun DetailedItemContainer(
                 fontWeight = FontWeight.ExtraLight,
                 fontFamily = NanumBarunGothic
             )*/
+
+
+            /*
             Material3RichText(
                 Modifier
                     .padding(margin.dp, (margin / 2.0).dp)
@@ -381,6 +379,9 @@ fun DetailedItemContainer(
             ) {
                 Markdown(itemInfo.description)
             }
+
+
+            */
             if (itemInfo.hashTag.isNotEmpty()) {
                 Text(
                     text = itemInfo.hashTag,
@@ -396,7 +397,7 @@ fun DetailedItemContainer(
                 modifier = Modifier
                     .absolutePadding(margin.dp, top = margin.dp, margin.dp, 0.dp)
                     .fillMaxWidth(),
-                text = "$iso4217${decFormat.format(itemInfo.price)}",
+                text = "$iso4217${itemInfo.price}",//"$iso4217${decFormat.format(itemInfo.price)}",
                 textStyle = TextStyle(
                     color = signatureColors.text,
                     fontSize = (fontSize * 1.5).sp,

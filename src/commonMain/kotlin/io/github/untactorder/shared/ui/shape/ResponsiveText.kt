@@ -1,4 +1,4 @@
-package io.github.untactorder.myapplication.ui.shape
+package io.github.untactorder.shared.ui.shape
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*

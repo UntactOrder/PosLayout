@@ -1,4 +1,4 @@
-package io.github.untactorder.myapplication.ui.layout.store
+package io.github.untactorder.shared.ui.layout.store
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,15 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.untactorder.myapplication.CreateCircle
-import io.github.untactorder.myapplication.Greeting2
-import io.github.untactorder.myapplication.R
-import io.github.untactorder.myapplication.ShowAge
-import io.github.untactorder.myapplication.ShowCard
-import io.github.untactorder.myapplication.ui.shape.ItemContainer
-import io.github.untactorder.myapplication.ui.shape.QuantitySelector
-import io.github.untactorder.myapplication.ui.theme.UntactOrderApplicationTheme
-import io.github.untactorder.myapplication.ui.theme.getSignature
+import io.github.untactorder.shared.ui.shape.ItemContainer
+import io.github.untactorder.shared.ui.shape.QuantitySelector
+import io.github.untactorder.shared.ui.theme.UntactOrderApplicationTheme
+import io.github.untactorder.shared.ui.theme.getSignature
 import kotlin.random.Random
 
 
