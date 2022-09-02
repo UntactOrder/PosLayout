@@ -8,7 +8,7 @@ plugins {
 }
 
 kotlin {
-    android()
+    android()/*
 
     listOf(
         iosX64(),
@@ -20,7 +20,7 @@ kotlin {
             export("dev.icerock.moko:resources:${rootProject.extra["moko_res_version"]}")
             export("dev.icerock.moko:graphics:0.9.0")  // toUIColor here
         }
-    }
+    }*/
 
     jvm("desktop") {
         compilations.all {
@@ -31,6 +31,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(mapOf("path" to ":shared:libs:kmqtt-client")))
                 api(compose.ui)
                 api(compose.runtime)
                 api(compose.foundation)
@@ -55,7 +56,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 api("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ext_version"]}")
-                api("androidx.compose.material3:material3:1.0.0-alpha16")
+                api("androidx.compose.material3:material3:1.0.0-beta01")
                 api("androidx.activity:activity-compose:1.5.1")
                 api("androidx.appcompat:appcompat:1.5.0")
                 api("androidx.core:core-ktx:1.8.0")
@@ -73,7 +74,7 @@ kotlin {
                 implementation("androidx.test.ext:junit-ktx:1.1.3")
                 implementation("junit:junit:4.13.2")
             }
-        }
+        }/*
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -91,7 +92,7 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
-        }
+        }*/
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
@@ -113,6 +114,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        resources {
+            merges += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/LICENSE*"
+            )
+            pickFirsts += "/bundle.properties"  // for kmqtt-client paho java lib
+        }
     }
 }
 

@@ -1,0 +1,4 @@
+[submodule "libs/kmqtt-client"]
+	path = libs/kmqtt-client
+	url = https://github.com/UntactOrder/KMQTT-Client.git
+	branch = submodule
